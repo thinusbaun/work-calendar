@@ -1,7 +1,7 @@
 import React, { ReactNode, SyntheticEvent } from 'react';
 import ApiCalendar from 'react-google-calendar-api';
 
-export default class DoubleButton extends React.Component {
+export default class LogInOutButton extends React.Component {
     constructor(props) {
         super(props);
         this.handleItemClick = this.handleItemClick.bind(this);

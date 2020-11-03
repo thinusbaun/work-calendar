@@ -1,12 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
-import DoubleButton from "./DoubleButton"
+import LogInOutButton from "./LogInOutButton"
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <DoubleButton></DoubleButton>
+        <LogInOutButton></LogInOutButton>
       </header>
     </div>
   );
