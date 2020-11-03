@@ -1,15 +1,15 @@
 import React, { ReactNode, SyntheticEvent } from 'react';
+import {connect} from 'react-redux';
+import {changeLoggedIn} from './redux/actions'
 import ApiCalendar from 'react-google-calendar-api';
 
-export default class LogInOutButton extends React.Component {
+class LogInOutButton extends React.Component {
     constructor(props) {
         super(props);
         this.handleItemClick = this.handleItemClick.bind(this);
-        this.state = {
-            sign: ApiCalendar.sign,
-        };
         this.signUpdate = this.signUpdate.bind(this);
         ApiCalendar.onLoad(() => {
+            this.props.dispatch({ type: 'CHANGE_LOGGED_IN', loggedIn: ApiCalendar.sign})
             ApiCalendar.listenSign(this.signUpdate);
         });
     }
@@ -23,13 +23,14 @@ export default class LogInOutButton extends React.Component {
     }
 
     signUpdate(sign) {
-        this.setState({
-            sign
-        })
+        this.props.dispatch({ type: 'CHANGE_LOGGED_IN', loggedIn: sign})
+        ApiCalendar.listCalendars().then(({result}) => {
+            console.log(result);
+          });;
     }
     render() {
         return (
-            this.state.sign ?
+            this.props.loggedIn ?
                 <button
                     onClick={(e) => this.handleItemClick(e, 'sign-out')}
                 >
@@ -46,3 +47,11 @@ export default class LogInOutButton extends React.Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    debugger;
+    const { loggedIn } = state
+    return { loggedIn: loggedIn }
+  }
+
+  export default connect(mapStateToProps)(LogInOutButton)
